@@ -1,10 +1,10 @@
 package com.mobile.rssnews.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.mobile.rssnews.model.ConnectionWorker;
+import com.mobile.rssnews.model.NewsItem;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class NewsContent {
     private static final String BASE_PATH = "http://feeds.bbci.co.uk/news/";
@@ -16,39 +16,32 @@ public class NewsContent {
 
     public static void getContent(int pageNumber) {
         NewsContent content = new NewsContent();
-        try {
-            switch (pageNumber) {
-                case 0:
-                    content.downloadContent(new URL(WORLD_NEWS));
-                    return;
-                case 1:
-                    content.downloadContent(new URL(BUSINESS_NEWS));
-                    return;
-                case 2:
-                    content.downloadContent(new URL(TECH_NEWS));
-                    return;
-                case 3:
-                    content.downloadContent(new URL(SCIENCE_NEWS));
-                    return;
-                case 4:
-                    content.downloadContent(new URL(ENT_AND_ARTS_NEWS));
-                    return;
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        switch (pageNumber) {
+            case 0:
+                content.downloadContent(WORLD_NEWS);
+                return;
+            case 1:
+                content.downloadContent(BUSINESS_NEWS);
+                return;
+            case 2:
+                content.downloadContent(TECH_NEWS);
+                return;
+            case 3:
+                content.downloadContent(SCIENCE_NEWS);
+                return;
+            case 4:
+                content.downloadContent(ENT_AND_ARTS_NEWS);
+                return;
         }
     }
 
-    public void downloadContent(URL url) {
+    public void downloadContent(String url) {
         try {
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.connect();
-
-            InputStream inputStream = urlConnection.getInputStream();
-
-            urlConnection.disconnect();
-        } catch (IOException e) {
+            List<NewsItem> content = new ConnectionWorker().execute(url).get();
+            int y = 0;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
     }
