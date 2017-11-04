@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
+import com.mobile.rssnews.controller.SectionsPagerAdapter;
+
 public class MainActivity extends AppCompatActivity {
 
     /**

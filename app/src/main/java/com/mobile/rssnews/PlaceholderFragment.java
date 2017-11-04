@@ -6,6 +6,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.mobile.rssnews.controller.NewsContent;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,7 +40,8 @@ public class PlaceholderFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         NewsContent.getContent(((ViewPager) container).getCurrentItem());
-        //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+        ListView newsWall = (ListView) rootView.findViewById(R.id.newsWall);
+
         //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         return rootView;
     }
