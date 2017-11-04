@@ -6,9 +6,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mobile.rssnews.controller.NewsContent;
+import com.mobile.rssnews.model.NewsItem;
+
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,9 +44,20 @@ public class PlaceholderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        NewsContent.getContent(((ViewPager) container).getCurrentItem());
+        List<NewsItem> data = NewsContent.getContent((Integer) this.getArguments().get(ARG_SECTION_NUMBER));
         ListView newsWall = (ListView) rootView.findViewById(R.id.newsWall);
 
+        View topNewsHolder = rootView.findViewById(R.id.topNewsHolder);
+
+        if (data != null && !data.isEmpty()) {
+            NewsItem story = data.get(0);
+            ((TextView) topNewsHolder.findViewById(R.id.topNewsTitle)).setText(story.getTitle());
+            ((TextView) topNewsHolder.findViewById(R.id.topNewsDescriprion)).setText(story.getDescription());
+            ImageView topNewsImage = (ImageView) topNewsHolder.findViewById(R.id.topNewsImage);
+            topNewsImage.setMinimumHeight((int) (topNewsImage.getMeasuredWidth() / 1.77777778));
+            topNewsImage.setMaxHeight((int) (topNewsImage.getMeasuredWidth() / 1.77777778));
+            topNewsImage.setImageBitmap(story.getImage());
+        }
         //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         return rootView;
     }

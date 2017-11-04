@@ -37,4 +37,12 @@ public class NewsItem {
     public void setLink(String link) {
         this.link = link;
     }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
 }

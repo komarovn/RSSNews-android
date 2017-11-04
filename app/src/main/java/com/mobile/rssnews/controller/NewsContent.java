@@ -14,35 +14,29 @@ public class NewsContent {
     public static final String SCIENCE_NEWS = BASE_PATH + "science_and_environment/rss.xml";
     public static final String ENT_AND_ARTS_NEWS = BASE_PATH + "entertainment_and_arts/rss.xml";
 
-    public static void getContent(int pageNumber) {
+    public static List<NewsItem> getContent(int pageNumber) {
         NewsContent content = new NewsContent();
         switch (pageNumber) {
             case 0:
-                content.downloadContent(WORLD_NEWS);
-                return;
+                return content.downloadContent(WORLD_NEWS);
             case 1:
-                content.downloadContent(BUSINESS_NEWS);
-                return;
+                return content.downloadContent(BUSINESS_NEWS);
             case 2:
-                content.downloadContent(TECH_NEWS);
-                return;
+                return content.downloadContent(TECH_NEWS);
             case 3:
-                content.downloadContent(SCIENCE_NEWS);
-                return;
+                return content.downloadContent(SCIENCE_NEWS);
             case 4:
-                content.downloadContent(ENT_AND_ARTS_NEWS);
-                return;
+                return content.downloadContent(ENT_AND_ARTS_NEWS);
         }
+        return null;
     }
 
-    public void downloadContent(String url) {
+    public List<NewsItem> downloadContent(String url) {
         try {
-            List<NewsItem> content = new ConnectionWorker().execute(url).get();
-            int y = 0;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+            return new ConnectionWorker().execute(url).get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
