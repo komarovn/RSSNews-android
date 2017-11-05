@@ -1,8 +1,9 @@
 package com.mobile.rssnews;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mobile.rssnews.controller.NewsContent;
+import com.mobile.rssnews.controller.NewsWallAdapter;
 import com.mobile.rssnews.model.NewsItem;
 
 import java.util.List;
@@ -45,7 +47,6 @@ public class PlaceholderFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         List<NewsItem> data = NewsContent.getContent((Integer) this.getArguments().get(ARG_SECTION_NUMBER));
-        ListView newsWall = (ListView) rootView.findViewById(R.id.newsWall);
 
         View topNewsHolder = rootView.findViewById(R.id.topNewsHolder);
 
@@ -58,7 +59,18 @@ public class PlaceholderFragment extends Fragment {
             topNewsImage.setMaxHeight((int) (topNewsImage.getMeasuredWidth() / 1.77777778));
             topNewsImage.setImageBitmap(story.getImage());
         }
-        //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+        ListView newsWall = (ListView) rootView.findViewById(R.id.newsWall);
+        NewsWallAdapter adapter = new NewsWallAdapter(data.subList(1, data.size() - 1), this);
+
+        newsWall.setAdapter(adapter);
+
         return rootView;
+    }
+
+    public void openWebView(String link) {
+        Intent intent = new Intent(getActivity(), WebBrowserActivity.class);
+        intent.putExtra("link", link);
+        startActivityForResult(intent, 0);
     }
 }
