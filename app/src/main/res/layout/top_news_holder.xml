@@ -10,9 +10,10 @@
 
     <ImageView
         android:id="@+id/topNewsImage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="8dp"
+        android:paddingTop="16dp"
         android:text="Explosive Martin Luther King document amid JFK files"
         android:textColor="@android:color/background_dark"
         android:textSize="24sp"

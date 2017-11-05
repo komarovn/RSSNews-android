@@ -2,6 +2,7 @@ package com.mobile.rssnews;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -55,9 +56,17 @@ public class PlaceholderFragment extends Fragment {
             ((TextView) topNewsHolder.findViewById(R.id.topNewsTitle)).setText(story.getTitle());
             ((TextView) topNewsHolder.findViewById(R.id.topNewsDescriprion)).setText(story.getDescription());
             ImageView topNewsImage = (ImageView) topNewsHolder.findViewById(R.id.topNewsImage);
-            topNewsImage.setMinimumHeight((int) (topNewsImage.getMeasuredWidth() / 1.77777778));
-            topNewsImage.setMaxHeight((int) (topNewsImage.getMeasuredWidth() / 1.77777778));
+            //topNewsImage.setMinimumHeight((int) (topNewsImage.getMeasuredWidth() / 1.77777778));
+            //topNewsImage.setMaxHeight((int) (topNewsImage.getMeasuredWidth() / 1.77777778));
             topNewsImage.setImageBitmap(story.getImage());
+            topNewsHolder.setTag(story.getLink());
+
+            topNewsHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openWebView((String) v.getTag());
+                }
+            });
         }
 
         ListView newsWall = (ListView) rootView.findViewById(R.id.newsWall);
@@ -72,5 +81,10 @@ public class PlaceholderFragment extends Fragment {
         Intent intent = new Intent(getActivity(), WebBrowserActivity.class);
         intent.putExtra("link", link);
         startActivityForResult(intent, 0);
+    }
+
+    private Bitmap getFitImage(Bitmap original) {
+
+        return original;
     }
 }
